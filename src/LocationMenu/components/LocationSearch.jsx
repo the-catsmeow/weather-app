@@ -30,6 +30,11 @@ const SearchIconBox = styled.div`
   height: 18px;
   width: 18px;
   flex-shrink: 0;
+
+  & svg {
+    height: 18px;
+    width: 18px;
+  }
 `;
 
 const SearchIcon = () => {
@@ -43,11 +48,11 @@ const SearchIcon = () => {
 const SearchInput = styled.input`
   font-family: 'Raleway';
   background: transparent;
-  height: 16px;
   font-size: 16px;
   outline: none;
   border: none;
   color: white;
+  overflow: hidden;
 `;
 
 const SearchButton = styled.button`

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Close } from '@styled-icons/material-rounded';
 
 const CloseButton = styled.button`
+cursor: pointer;
 height: 30px;
 width: 30px
 outline: none;

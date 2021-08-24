@@ -41,6 +41,11 @@ const LocatorButton = styled.button`
   &:active {
     transform: scale(1.05);
   }
+
+  & svg {
+    height: 24px;
+    width: 24px;
+  }
 `;
 
 const Locater = (props) => (
