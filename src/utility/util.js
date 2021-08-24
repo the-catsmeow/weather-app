@@ -9,7 +9,7 @@ import {
   sleet,
   snow,
   thunderstorm,
-} from '../assets/assets';
+} from '../assets';
 
 export function convertToFahrenheit(tempCelcius) {
   return (tempCelcius * 9) / 5 + 32;

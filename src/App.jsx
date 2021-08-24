@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { testWeather } from './test_data/weather';
-import LocationMenu from './components/LocationMenu';
-import MainLayout from './components/MainLayout';
+import API from './API';
+import LocationMenu from './LocationMenu/LocationMenu';
+import Main from './Main/Main';
 
-import SideBar from './components/SideBar';
+import SideBar from './Sidebar/SideBar';
 import {
   convertTemps,
   convertToCelcius,
@@ -28,33 +28,18 @@ function App() {
     longitude: -74.007118,
   });
 
-  const BASE_URL =
-    'https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/';
-
   useEffect(() => {
-    async function fetchData() {
-      const locationRequest = await fetch(
-        BASE_URL +
-          'location/search/?lattlong=' +
-          location.latitude +
-          ',' +
-          location.longitude
-      );
-      const locationResponse = await locationRequest.json();
-      const weatherRequest = await fetch(
-        BASE_URL + 'api/location/' + locationResponse[0].woeid
-      );
-      const weatherResponse = await weatherRequest.json();
-
+    API.fetchData(location).then((weatherResponse) => {
       setWeatherData({
-        forecast: [...weatherResponse.consolidated_weather],
+        forecast: convertTemps(
+          [...weatherResponse.consolidated_weather],
+          convertToFahrenheit
+        ),
         locationName: `${weatherResponse.title}, ${weatherResponse.parent.title}`,
         loaded: true,
-        scale: 'celcius',
+        scale: 'fahrenheit',
       });
-    }
-
-    fetchData();
+    });
   }, [location]);
 
   const setCurrentScale = (scale) => {
@@ -109,10 +94,9 @@ function App() {
             <LocationMenu
               closeHandler={() => setShowLocationMenu(false)}
               setLocation={setLocation}
-              BASE_URL={BASE_URL}
             />
           )}
-          <MainLayout
+          <Main
             todayForecast={Object.assign(weatherData.forecast[0])}
             fiveDayForecast={weatherData.forecast.slice(1)}
             changeTempScale={setCurrentScale}
